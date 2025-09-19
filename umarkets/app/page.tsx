@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badges"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/iinput"
 import { Label } from "@/components/ui/label"
 import {
   DropdownMenu,
@@ -47,7 +47,7 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Alert, AlertDescription } from "@/components/ui/alerts"
 import { format } from "date-fns"
 import { useWeb3 } from "../hooks/useWeb3"
 import { useMarkets } from "../hooks/useMarkets"
