@@ -34,7 +34,7 @@ export function useMarkets(contract: Contract | null): UseMarketsReturn {
 
       const formattedMarkets: Market[] = rawMarkets.map((market) => {
         const totalShares = market.yesShares + market.noShares
-        const yesPrice = totalShares > 0n ? Number(market.yesShares) / Number(totalShares) : 0.5
+        const yesPrice = totalShares > BigInt(0) ? Number(market.yesShares) / Number(totalShares) : 0.5
         const noPrice = 1 - yesPrice
 
         return {
@@ -43,9 +43,9 @@ export function useMarkets(contract: Contract | null): UseMarketsReturn {
           category: market.category,
           creator: market.creator,
           endTime: Number(market.endTime),
-          totalVolume: market.totalVolume,
-          yesShares: market.yesShares,
-          noShares: market.noShares,
+          totalVolume: market.totalVolume.toString(), // Convert to string
+          yesShares: market.yesShares.toString(), // Convert to string
+          noShares: market.noShares.toString(), // Convert to string
           resolved: market.resolved,
           outcome: market.outcome,
           participantCount: Number(market.participantCount),

@@ -51,9 +51,10 @@ import { Alert, AlertDescription } from "@/components/ui/alerts"
 import { format } from "date-fns"
 import { useWeb3 } from "../hooks/useWeb3"
 import { useMarkets } from "../hooks/useMarkets"
-import type { Market } from "../contracts/PredictionMarket"
+import type { Market } from "../contracts/PredicationMarkets"
 import type { Category, NewMarket } from "../types/market"
 import Image from "next/image"
+import { ethers } from "ethers"
 
 const categories: Category[] = [
   { name: "All", count: 0 },
@@ -71,7 +72,7 @@ export default function UniverselMarkets() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All")
   const [betAmount, setBetAmount] = useState<string>("")
   const [selectedMarket, setSelectedMarket] = useState<Market | null>(null)
-  const [userBalance, setUserBalance] = useState<number>(0)
+  const [userBalance, setUserBalance] = useState<string>("0")
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false)
   const [isCreatingMarket, setIsCreatingMarket] = useState<boolean>(false)
@@ -80,7 +81,7 @@ export default function UniverselMarkets() {
     title: "",
     description: "",
     category: "",
-    endDate: null,
+    endDate: undefined, // Changed from null to undefined
     initialLiquidity: "",
     tags: "",
   })
@@ -99,10 +100,9 @@ export default function UniverselMarkets() {
     const fetchBalance = async () => {
       if (isConnected && window.ethereum) {
         try {
-          const { ethers } = await import("ethers")
           const provider = new ethers.BrowserProvider(window.ethereum)
           const balance = await provider.getBalance(account)
-          setUserBalance(Number(ethers.formatEther(balance)))
+          setUserBalance(ethers.formatEther(balance))
         } catch (err) {
           console.error("Failed to fetch balance:", err)
         }
@@ -132,7 +132,7 @@ export default function UniverselMarkets() {
         title: "",
         description: "",
         category: "",
-        endDate: null,
+        endDate: undefined, // Changed from null to undefined
         initialLiquidity: "",
         tags: "",
       })
@@ -159,6 +159,11 @@ export default function UniverselMarkets() {
     } finally {
       setIsBetting(false)
     }
+  }
+
+  // Helper function to handle date selection with proper type conversion
+  const handleDateSelect = (date: Date | undefined) => {
+    setNewMarket({ ...newMarket, endDate: date })
   }
 
   const filteredMarkets: Market[] =
@@ -278,7 +283,7 @@ export default function UniverselMarkets() {
                               <Calendar
                                 mode="single"
                                 selected={newMarket.endDate}
-                                onSelect={(date) => setNewMarket({ ...newMarket, endDate: date })}
+                                onSelect={handleDateSelect}
                                 disabled={(date) => date < new Date()}
                                 initialFocus
                                 className="text-slate-100"
@@ -315,7 +320,7 @@ export default function UniverselMarkets() {
                       <Button
                         variant="outline"
                         onClick={() => setIsCreateModalOpen(false)}
-                        className="bg-slate-800 border-slate-600 text-slate-100 hover:bg-slate-700"
+                        className="bg-slate-800 border-slate-600 text-slate-100 hover:bg-slate-700/50"
                       >
                         Cancel
                       </Button>
@@ -344,7 +349,7 @@ export default function UniverselMarkets() {
                           {account.slice(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="font-medium">{userBalance.toFixed(4)} ETH</span>
+                      <span className="font-medium">{Number.parseFloat(userBalance).toFixed(4)} ETH</span>
                       <ChevronDown className="w-4 h-4" />
                     </Button>
                   </DropdownMenuTrigger>
@@ -437,7 +442,9 @@ export default function UniverselMarkets() {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-slate-400">Balance</span>
-                      <span className="font-semibold text-slate-100">{userBalance.toFixed(4)} ETH</span>
+                      <span className="font-semibold text-slate-100">
+                        {Number.parseFloat(userBalance).toFixed(4)} ETH
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-slate-400">Address</span>

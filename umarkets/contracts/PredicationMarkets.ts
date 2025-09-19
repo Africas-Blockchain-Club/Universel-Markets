@@ -95,9 +95,9 @@ export interface Market {
   category: string
   creator: string
   endTime: number
-  totalVolume: bigint
-  yesShares: bigint
-  noShares: bigint
+  totalVolume: string // Changed to string to avoid BigInt rendering issues
+  yesShares: string // Changed to string
+  noShares: string // Changed to string
   resolved: boolean
   outcome: boolean
   participantCount: number
