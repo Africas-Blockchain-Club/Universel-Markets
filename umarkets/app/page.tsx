@@ -172,7 +172,7 @@ export default function UniverselMarkets() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[url('/universel-bg.jpg')] bg-cover bg-center opacity-10" />
+      <div className="absolute inset-0 bg-[url('/UniverselMarkets.jpg')] bg-cover bg-center opacity-10" />
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-slate-900/20" />
 
       {/* Header */}
@@ -182,7 +182,7 @@ export default function UniverselMarkets() {
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-3">
                 <Image
-                  src="/universel-logo.png"
+                  src="/universel.png"
                   alt="Universel Protocol"
                   width={32}
                   height={32}
@@ -192,10 +192,6 @@ export default function UniverselMarkets() {
                   Universel Markets
                 </span>
               </div>
-              <Badge variant="secondary" className="bg-blue-500/20 text-blue-300 border-blue-500/30">
-                <Shield className="w-3 h-3 mr-1" />
-                Web3 Contract
-              </Badge>
             </div>
 
             <div className="flex items-center space-x-4">
